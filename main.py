@@ -7,6 +7,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
 from core.handlers.authorization import router as auth_router
 
+
 TOKEN = settings.read_config_json("C:/input.json", "TOKEN")
 data_connect = settings.read_config_json("C:/input.json", "data_connect")
 dsn = f'postgresql://{data_connect["user"]}:{data_connect["password"]}@{data_connect["host"]}:{data_connect["port"]}/{data_connect["database"]}?sslmode=disable'
