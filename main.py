@@ -3,9 +3,13 @@ import logging
 import asyncpg
 from core import settings
 from aiogram import Bot, Dispatcher, types
-
+from core.middleware.check_role import QualifierRole
 from aiogram.filters.command import Command
 from core.handlers.authorization import router as auth_router
+from core.handlers.sysadmin.handlers import router as sysadmin_mode
+from core.handlers.teacher.handlers import router as teacher_mode
+from core.handlers import all_routers
+from core.middleware.test_1 import MyMiddleware
 
 
 TOKEN = settings.read_config_json("C:/input.json", "TOKEN")
@@ -27,9 +31,18 @@ async def main():
 
     # Передаём pool в workflow_data — он будет доступен во всех хендлерах
     dp["pool"] = pool
+
+    dp.message.middleware(QualifierRole(pool))
+    dp.message.middleware(MyMiddleware())
+
     # Подключаем роутер авторизации
     dp.include_router(auth_router)
-    # Запускаем бота
+    print(len(all_routers))
+    '''
+    for router in all_routers:
+        print(router)
+        dp.include_router(router)
+   ''' 
     try:
         await dp.start_polling(bot)
     finally:

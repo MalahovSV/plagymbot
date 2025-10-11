@@ -7,6 +7,7 @@ from asyncpg import Pool
 class AuthStates(StatesGroup):
     waiting_for_login = State()
     waiting_for_password = State()
+    identity_role = State()
 
 router = Router()
 
@@ -54,5 +55,7 @@ async def process_password(message: types.Message, state: FSMContext, pool: Pool
         else:
             await message.answer("❌ Неверный логин или пароль. Попробуйте снова.\nВведите логин:")
             await state.set_state(AuthStates.waiting_for_login)
+            
+
 
 
