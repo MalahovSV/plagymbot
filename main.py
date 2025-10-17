@@ -33,16 +33,9 @@ async def main():
     dp["pool"] = pool
 
     dp.message.middleware(QualifierRole(pool))
-    dp.message.middleware(MyMiddleware())
-
     # Подключаем роутер авторизации
     dp.include_router(auth_router)
-    print(len(all_routers))
-    '''
-    for router in all_routers:
-        print(router)
-        dp.include_router(router)
-   ''' 
+
     try:
         await dp.start_polling(bot)
     finally:

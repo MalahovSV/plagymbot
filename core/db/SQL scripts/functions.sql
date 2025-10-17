@@ -19,3 +19,15 @@ BEGIN
 	);
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION get_name_role_by_telegram_id(tg_id BIGINT)
+RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RETURN(
+		SELECT roles.name from roles WHERE roles.id = 
+		(SELECT role_id FROM users WHERE telegram_id = tg_id)
+	);
+END;
+$$;

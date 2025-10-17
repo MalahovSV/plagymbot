@@ -19,7 +19,7 @@ async def cmd_start(message: types.Message, pool: Pool, state: FSMContext):
         user = await conn.fetchrow(f"SELECT get_user_id_by_telegram_id($1)", user_id)
     
     if user[0] != None:
-        await message.answer("✅ Вы уже авторизованы! Добро пожаловать.")
+        await message.answer(f"✅ Вы уже авторизованы! Добро пожаловать.")
         await state.clear()  # на всякий случай сбрасываем состояние
     else:
         await message.answer("🔐 Вы не авторизованы.\nПожалуйста, введите ваш логин:")
