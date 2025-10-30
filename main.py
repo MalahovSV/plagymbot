@@ -7,6 +7,8 @@ from core.middleware.check_role import QualifierRole
 from aiogram.filters.command import Command
 from core.handlers.authorization import router as auth_router
 from core.handlers.sysadmin.handlers import router as sysadmin_mode
+from core.handlers.debug_fallback import router as debug_fallback
+
 from core.handlers.teacher.handlers import router as teacher_mode
 from core.handlers import all_routers
 from core.middleware.test_1 import MyMiddleware
@@ -32,9 +34,16 @@ async def main():
     # Передаём pool в workflow_data — он будет доступен во всех хендлерах
     dp["pool"] = pool
 
-    dp.message.middleware(QualifierRole(pool))
+    
     # Подключаем роутер авторизации
     dp.include_router(auth_router)
+    
+    dp.message.middleware(QualifierRole(pool))
+    dp.include_router(sysadmin_mode)
+    dp.include_router(debug_fallback)
+
+
+
 
     try:
         await dp.start_polling(bot)
@@ -46,4 +55,3 @@ async def main():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     asyncio.run(main())    
-    

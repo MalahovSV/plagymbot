@@ -4,7 +4,6 @@ from typing import Any, Callable, Dict, Awaitable
 from aiogram.types import Message
 from core.utils.StateReporter import StateReporterMiddleware
 
-
 consoleLogger = StateReporterMiddleware("check_role")
 class QualifierRole(BaseMiddleware):
     def __init__(self, pool: Pool):
@@ -21,18 +20,21 @@ class QualifierRole(BaseMiddleware):
             return await handler(event, data)
         
         consoleLogger.middlewareStart()
+        
 
         if event.text and event.text.startswith("/start"):
             async with self.pool.acquire() as conn:
                 role = await conn.fetchval(
                     "select get_name_role_by_telegram_id($1)", event.from_user.id 
                 )
+                
             if role is None:
-                consoleLogger.middlewareEndWithCode("Не присвоена роль")
+                consoleLogger.eventTgbEndWithCode("Не присвоена роль")
                 await event.answer("Не присвоена роль. Обратитесь к администратору.")
-                return
-            
+                return await handler(event, data)
+            print(role)
             data["user_role"] = role
-            consoleLogger.middlewareData("user_role", data["user_role"])
-            consoleLogger.middlewareEnd()
+            consoleLogger.eventTgbData("user_role", data["user_role"])
             return await handler(event, data)
+        consoleLogger.middlewareEnd()
+        return await handler(event, data)

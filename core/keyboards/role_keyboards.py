@@ -27,10 +27,12 @@ def get_keyboard(role: str) -> ReplyKeyboardMarkup:
         )
     elif role == "sysadmin":
         return ReplyKeyboardMarkup(
-            keyboard=[
-                [KeyboardButton(text="➕ Добавить устройство"), KeyboardButton(text="🔍 Устройство по коду")],
-                [KeyboardButton(text="🎫 Текущие тикеты"), KeyboardButton(text="🚪 Выйти")]
-            ],
+                       keyboard=[
+                [KeyboardButton(text="➕ Добавить устройство")],
+                [KeyboardButton(text="🔍 Устройство по коду")],
+                [KeyboardButton(text="🎫 Текущие тикеты")],
+                [KeyboardButton(text="🚪 Выйти")]            
+                ],
             resize_keyboard=True
         )
     else:

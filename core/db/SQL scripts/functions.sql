@@ -26,7 +26,7 @@ LANGUAGE plpgsql
 AS $$
 BEGIN
 	RETURN(
-		SELECT roles.name from roles WHERE roles.id = 
+		SELECT roles.name, roles.description from roles WHERE roles.id = 
 		(SELECT role_id FROM users WHERE telegram_id = tg_id)
 	);
 END;

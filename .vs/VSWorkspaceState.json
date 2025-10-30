@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\core",
+    "\\core\\db\\SQL scripts",
+    "\\core\\handlers",
+    "\\core\\keyboards",
+    "\\core\\middleware",
+    "\\core\\utils",
+    "\\data"
+  ],
+  "SelectedNode": "\\core\\utils\\StateReporter.py",
+  "PreviewInSolutionExplorer": false
+}
